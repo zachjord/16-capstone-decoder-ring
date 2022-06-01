@@ -14,7 +14,7 @@ const polybiusModule = (function () {
 
   function polybius(input, encode = true) {
     //checks that input is an even amount of characters minus spaces when decoding
-    if (!encode && input.replace(/\s/g, '').length & 2 != 0) {return false;}
+    if (!encode && input.replace(/\s/g, '').length % 2 != 0) {return false;}
 
     const result = [];
 
