@@ -12,7 +12,6 @@ const polybiusModule = (function () {
                              14,24,34,44,54,
                              15,25,35,45,55]];
 
-  //for decoding, if col,row=42, return (i/j)
   function polybius(input, encode = true) {
     //checks that input is an even amount of characters minus spaces when decoding
     if (!encode && input.replace(/\s/g, '').length & 2 != 0) {return false;}
@@ -32,12 +31,18 @@ const polybiusModule = (function () {
     }
 
     function decoder () {
+      //replace all spaces with 00 so that the length of the valid input remains even
       //could use .replaceAll(" ", "00"); but Qualified doesn't like it
       const replaceSpace = input.replace(/\s/g, '00');
+      //divide the string into an array with 2 characters going to each index
       const inputAsArray = replaceSpace.match(/.{2}/g);
       for (let i = 0; i < inputAsArray.length; i++) {
+        //catch for i and j sharing the value 42
         if (inputAsArray[i] === "42") {result.push("(i/j)");}
+        //convert the placeholder 00 back into a space
         if (inputAsArray[i] === "00") {result.push(" ");}
+        //regular case, iterates through alphabetPolybius to find the matching number/letter combo
+        //probably could use find() here, but this was easier for me while I was writing
         for (let j = 0; j < 25; j++) {
           if (inputAsArray[i] == alphabetPolybius[1][j] && inputAsArray[i] !== "42") {result.push(alphabetPolybius[0][j]);}
         }
