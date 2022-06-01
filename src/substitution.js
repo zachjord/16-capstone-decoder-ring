@@ -2,8 +2,9 @@ const substitutionModule = (function () {
   const normalAlphabet = Array.from("abcdefghijklmnopqrstuvwxyz");
 
   function substitution(input, alphabet, encode = true) {
-
+    //regex looking for duplicate characters in the alphabet
     const isDuplicate = !/(.).*\1/.test(alphabet);
+    //check that alphabet exisits, has no duplicate characters, and is 26 characers long
     if (!alphabet || alphabet.length != 26 || !isDuplicate) return false;
 
     const inputAlphabet = Array.from(alphabet);
@@ -22,6 +23,9 @@ const substitutionModule = (function () {
           cipheredInputAsArray.push(input[i]);
       }
       else {
+        //this is a bit inefficient; encode status is checked with every iteration and is also checked in letterMatchIndex
+        //I wrote substitution.js before I wrote polybius.js and it would be cleaner, I think, if I had a separate encoder
+        //     and decoder function like I did in polybius.js
         if (!encode) {
           cipheredInputAsArray.push(normalAlphabet[letterMatchIndex]);
         }
